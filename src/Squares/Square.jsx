@@ -50,7 +50,7 @@ const Square = ({ setGameState, id }) => {
         if(!icon) {
             setIcon(circleSvg);
         }
-    }
+    } 
   return <div onClick={clickOnSquare} className="square">{icon}</div>;
 };
 
