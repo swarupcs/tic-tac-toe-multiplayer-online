@@ -43,15 +43,39 @@ const crossSvg = (
   </svg>
 );
 
-const Square = ({ setGameState, id }) => {
+const Square = ({ setGameState, setFinishedState, finishedState, id, currentPlayer, setCurrentPlayer }) => {
+  const [icon, setIcon] = useState(null);
+  const clickOnSquare = () => {
+    if (!icon) {
+      if (currentPlayer === "circle") {
+        setIcon(circleSvg);
+      } else {
+        setIcon(crossSvg);
+      }
 
-    const [icon, setIcon] = useState(null);
-    const clickOnSquare = () => {
-        if(!icon) {
-            setIcon(circleSvg);
-        }
-    } 
-  return <div onClick={clickOnSquare} className="square">{icon}</div>;
+      const myCurrentPlayer = currentPlayer;
+
+      setCurrentPlayer(currentPlayer === "circle" ? "cross" : "circle");
+      setGameState(prevState => {
+        let newState = [...prevState];
+        // console.log(id);
+        const rowIndex = Math.floor(id/3);
+        // console.log("rowIndex",rowIndex);
+        const colIndex = id % 3;
+        // console.log("colIndex",colIndex);
+        // console.log(newState);
+        newState[rowIndex][colIndex] = myCurrentPlayer; 
+        // console.log(newState);
+        return newState;
+      })
+    }
+
+  };
+  return (
+    <div onClick={clickOnSquare} className="square">
+      {icon}
+    </div>
+  );
 };
 
 export default Square;
