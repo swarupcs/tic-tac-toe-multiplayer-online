@@ -51,7 +51,6 @@ const App = () => {
             arr.map((e, colIndex) => {
               return (
                 <Square
-                  setFinishedState={setFinishedState}
                   finishedState={finishedState}
                   currentPlayer={currentPlayer}
                   setCurrentPlayer={setCurrentPlayer}
