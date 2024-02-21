@@ -43,7 +43,7 @@ const crossSvg = (
   </svg>
 );
 
-const Square = ({ setGameState,  finishedState, id, currentPlayer, setCurrentPlayer }) => {
+const Square = ({ finishedArrayState, setGameState,  finishedState, id, currentPlayer, setCurrentPlayer }) => {
   const [icon, setIcon] = useState(null);
   const clickOnSquare = () => {
 
@@ -77,7 +77,7 @@ const Square = ({ setGameState,  finishedState, id, currentPlayer, setCurrentPla
 
   };
   return (
-    <div onClick={clickOnSquare} className={`square ${finishedState ? 'not-allowed' : ''}`}>
+    <div onClick={clickOnSquare} className={`square ${finishedState ? "not-allowed" : ""} ${finishedArrayState.includes(id) ? finishedState + "-won" : ""}`}>
       {icon}
     </div>
   );

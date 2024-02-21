@@ -13,6 +13,7 @@ const App = () => {
   const [currentPlayer, setCurrentPlayer] = useState("circle");
   const [finishedState, setFinishedState] = useState(false);
   const [finishedArrayState, setFinishedArrayState] = useState([]);
+  const [playOnline , setPlayOnline] = useState(false);
 
   const checkWinner = () => {
     //row dynamic
@@ -21,7 +22,7 @@ const App = () => {
         gameState[row][0] === gameState[row][1] &&
         gameState[row][1] === gameState[row][2]
       ) {
-        setFinishedArrayState(row*3+0, row*3+1, row*3+2);
+        setFinishedArrayState([row * 3 + 0, row * 3 + 1, row * 3 + 2]);
         return gameState[row][0];
       }
     }
@@ -32,43 +33,55 @@ const App = () => {
         gameState[0][col] === gameState[1][col] &&
         gameState[1][col] === gameState[2][col]
       ) {
+        setFinishedArrayState([0*3 +col, 1*3+col, 2*3+col]);
         return gameState[0][col];
       }
     }
 
     //diagonally won
-    if(gameState[0][0] === gameState[1][1] && gameState[1][1] === gameState[2][2]) {
+    if (
+      gameState[0][0] === gameState[1][1] &&
+      gameState[1][1] === gameState[2][2]
+    ) {
       return gameState[0][0];
     }
 
     //diagonally won
-    if(gameState[0][2] === gameState[1][1] && gameState[1][1] === gameState[2][0]) {
+    if (
+      gameState[0][2] === gameState[1][1] &&
+      gameState[1][1] === gameState[2][0]
+    ) {
       return gameState[0][2];
     }
 
-    const isDrawMatch = gameState.flat().every(e => {
-      if(e === "circle" || e === "cross") {
+    const isDrawMatch = gameState.flat().every((e) => {
+      if (e === "circle" || e === "cross") {
         return true;
       }
-    })
+    });
 
-    if(isDrawMatch) {
-      return 'draw';
+    if (isDrawMatch) {
+      return "draw";
     }
 
     // console.log(isDrawMatch);
-
 
     return null;
   };
 
   useEffect(() => {
     const winner = checkWinner();
-    
-    if(winner) {
-      setFinishedState(winner)
+
+    if (winner) {
+      setFinishedState(winner);
     }
   }, [gameState]);
+
+  // if(!playOnline) {
+  //   return <div className="main-div">
+  //   <button className="playOnline">Play Online</button>
+  //   </div>
+  // }
 
   return (
     <div className="main-div">
@@ -83,6 +96,7 @@ const App = () => {
             arr.map((e, colIndex) => {
               return (
                 <Square
+                  finishedArrayState={finishedArrayState}
                   finishedState={finishedState}
                   currentPlayer={currentPlayer}
                   setCurrentPlayer={setCurrentPlayer}
@@ -94,11 +108,13 @@ const App = () => {
             })
           )}
         </div>
-       { finishedState &&  finishedState !== 'draw' &&
-        (<h3 className="finished-state">{finishedState} won the game</h3>)}
+        {finishedState && finishedState !== "draw" && (
+          <h3 className="finished-state">{finishedState} won the game</h3>
+        )}
 
-        { finishedState &&  finishedState === 'draw' &&
-        (<h3 className="finished-state">It's a Draw</h3>)}
+        {finishedState && finishedState === "draw" && (
+          <h3 className="finished-state">It's a Draw</h3>
+        )}
       </div>
     </div>
   );
